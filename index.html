@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator AI — Generate YouTube & Instagram Content</title>
+<link rel="icon" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="navbar-inner">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="" class="brand-logo">
+      <span>Creator AI</span>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <button class="nav-link active" data-view="home">Home</button>
+      <button class="nav-link" data-view="templates">Templates</button>
+      <button class="nav-link" data-view="history">History</button>
+      <button class="nav-link" data-view="settings">Settings</button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Generate YouTube &amp; Instagram Content in Seconds</h1>
+  <p class="subtitle">Powered by AI using OpenRouter</p>
+</section>
+
+<main class="layout" id="homeView">
+
+  <!-- Left panel -->
+  <section class="panel input-panel">
+    <div class="card">
+
+      <div class="field">
+        <label for="topic">Video Topic</label>
+        <textarea id="topic" rows="3" placeholder="Example: Virat Kohli destroys Australia in the final over"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category">
+            <option>Cricket</option><option>Gaming</option><option>Tech</option>
+            <option>Movies</option><option>Education</option><option>Coding</option>
+            <option>Finance</option><option>News</option><option>Podcast</option>
+            <option>History</option><option>Travel</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tone">Tone</label>
+          <select id="tone">
+            <option>Funny</option><option>Professional</option><option>Clickbait</option>
+            <option>Emotional</option><option>Informative</option><option>Casual</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="language">Language</label>
+          <select id="language">
+            <option>English</option><option>Hindi</option><option>Hinglish</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="platform">Target Platform</label>
+          <select id="platform">
+            <option>YouTube</option><option>Instagram</option><option selected>Both</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="model">AI Model</label>
+        <input type="text" id="model" placeholder="e.g. openai/gpt-4.1-mini" value="openai/gpt-4.1-mini">
+      </div>
+
+      <div class="field">
+        <label for="apiKey">OpenRouter API Key <span style="font-weight:400;color:var(--text-secondary)">(optional)</span></label>
+        <input type="password" id="apiKey" placeholder="Leave blank to use the site's shared key">
+        <span class="hint">Only needed to use your own key instead of the site's. Stored in your browser's LocalStorage.</span>
+      </div>
+
+      <button class="btn-generate" id="generateBtn">
+        <span id="generateBtnText">Generate</span>
+        <span class="spinner" id="generateSpinner" hidden></span>
+      </button>
+      <p class="generating-text" id="generatingText" hidden>Generating content...</p>
+    </div>
+  </section>
+
+  <!-- Right panel -->
+  <section class="panel output-panel" id="outputPanel">
+    <div class="empty-state" id="emptyState">
+      <p>Your generated content will appear here.</p>
+      <span>Fill in a topic on the left and hit Generate.</span>
+    </div>
+    <div class="export-row" id="exportRow" hidden>
+      <button class="icon-btn" id="downloadTxtBtn">Download .txt</button>
+      <button class="icon-btn" id="downloadMdBtn">Download .md</button>
+    </div>
+    <div id="resultsContainer"></div>
+  </section>
+
+</main>
+
+<!-- Templates view -->
+<main class="layout single" id="templatesView" hidden>
+  <h2 class="section-heading">Templates</h2>
+  <p class="section-sub">One-click starting points tuned per niche.</p>
+  <div class="template-grid" id="templateGrid"></div>
+</main>
+
+<!-- History view -->
+<main class="layout single" id="historyView" hidden>
+  <h2 class="section-heading">History</h2>
+  <p class="section-sub">Your last 10 generations, saved locally.</p>
+  <div class="history-list" id="historyList"></div>
+</main>
+
+<!-- Settings view -->
+<main class="layout single" id="settingsView" hidden>
+  <h2 class="section-heading">Settings</h2>
+  <div class="card settings-card">
+    <div class="field">
+      <label for="settingsApiKey">OpenRouter API Key</label>
+      <input type="password" id="settingsApiKey" placeholder="sk-or-v1-...">
+    </div>
+    <div class="field">
+      <label for="settingsModel">Default AI Model</label>
+      <input type="text" id="settingsModel" placeholder="e.g. openai/gpt-4.1-mini">
+    </div>
+    <button class="btn-secondary" id="saveSettingsBtn">Save Settings</button>
+    <button class="btn-danger" id="clearHistoryBtn">Clear All History</button>
+  </div>
+</main>
+
+<button class="copy-all-fab" id="copyAllFab" hidden>Copy All</button>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/prompts.js"></script>
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
