@@ -1,80 +1,78 @@
-# Creator AI
+# Creator AI 2.0
 
-A lightweight tool that generates YouTube & Instagram metadata (titles,
-description, tags, hashtags, hooks, captions, SEO tips, and more) using the
-OpenRouter API. Frontend is pure HTML/CSS/vanilla JS; a single Netlify
-serverless function keeps the OpenRouter API key off the browser.
+A polished, lightweight content-generation experience for creators who need fast, high-quality social media metadata. Creator AI 2.0 helps you craft compelling YouTube and Instagram titles, descriptions, hooks, hashtags, captions, and SEO-ready suggestions in seconds.
 
-## How the key is handled
+## ✨ Highlights
 
-- Your OpenRouter key lives **only** as a Netlify environment variable
-  (`OPENROUTER_API_KEY`) — it is never shipped in the JS bundle.
-- The browser calls `/api/generate`, which is proxied to
-  `netlify/functions/generate.js`. That function attaches your key
-  server-side and forwards the request to OpenRouter.
-- Visitors can optionally paste their **own** key in the UI (Settings or the
-  left panel) to use instead of yours — useful if you want to let power
-  users bring their own key while defaulting everyone else to yours.
-- The function includes a basic, best-effort per-IP rate limit (20
-  requests/hour) to blunt casual abuse. This resets on cold starts, so for
-  real production traffic swap it for a persistent store (Netlify Blobs or
-  Upstash Redis) — see the comment at the top of `generate.js`.
+- Generate platform-specific metadata for YouTube and Instagram
+- Create engaging hooks, captions, and hashtag sets
+- Tailor results by category, tone, language, and platform
+- Export content quickly as text or markdown for easy sharing
 
-## Deploy to Netlify
+## 🧠 How it works
 
-1. Push this folder to a GitHub repo (or drag-and-drop the folder into
-   Netlify's deploy UI).
-2. In Netlify: **Site settings → Environment variables** → add
-   `OPENROUTER_API_KEY` with your key from [openrouter.ai](https://openrouter.ai).
-3. Deploy. Netlify auto-detects `netlify.toml` and picks up the function
-   in `netlify/functions/generate.js`.
+The app combines a clean frontend built with HTML, CSS, and vanilla JavaScript with a secure Netlify serverless function. Requests are routed through the backend so your OpenRouter API key remains protected from the browser.
 
-## Run locally
+## 🚀 Quick start
+
+1. Clone the project to your local machine.
+2. Install the Netlify CLI:
 
 ```bash
 npm install -g netlify-cli
+```
+
+3. Set your environment variable:
+
+```bash
+netlify env:set OPENROUTER_API_KEY your_key_here
+```
+
+4. Start the local app:
+
+```bash
 netlify dev
 ```
 
-`netlify dev` serves the static site *and* runs the function locally so
-`/api/generate` works exactly as it will in production. Set your key first:
+## ☁️ Deploy to Netlify
 
-```bash
-netlify env:set OPENROUTER_API_KEY sk-or-v1-...
-```
+1. Push the project to GitHub or upload it directly in Netlify.
+2. Open Netlify Site settings and add the environment variable `OPENROUTER_API_KEY`.
+3. Deploy the site and Netlify will detect the serverless function automatically.
 
-Opening `index.html` directly (no `netlify dev`) will NOT work anymore,
-since `/api/generate` needs the function runtime to respond.
+## 🛠️ Project structure
 
-## Use it
-
-1. Type a topic, pick category/tone/language/platform, and click **Generate**.
-2. Copy individual sections, regenerate one section, or use **Copy All** /
-   **Download .txt / .md** to export everything at once.
-
-## Structure
-
-```
+```text
 Creator-AI/
 ├── index.html
 ├── netlify.toml
-├── netlify/functions/generate.js   – serverless proxy, holds the API key
+├── netlify/functions/generate.js
 ├── css/style.css
 ├── js/
-│   ├── prompts.js   – prompt templates & section list
-│   ├── api.js       – calls the proxy (no key in the browser)
-│   └── script.js    – UI, parsing, history, templates, export
-├── assets/logo.svg
+│   ├── prompts.js
+│   ├── api.js
+│   └── script.js
+├── assets/
 └── README.md
 ```
 
-## Notes
+## 🔒 Security notes
 
-- History (last 10 generations) and Settings are stored in the visitor's
-  browser LocalStorage only.
-- The AI is prompted to return Markdown headings (`# YouTube Titles`, etc.)
-  which `script.js` parses into the matching cards.
-- SEO Score / Clickbait Score bars are lightweight heuristics for visual
-  feedback, not a real analytics measurement.
-- Watch your OpenRouter spend — since visitors share your key by default,
-  consider setting a hard spending cap on the key at openrouter.ai.
+- Your API key is handled server-side through Netlify environment variables.
+- Visitors can optionally provide their own key in the interface.
+- A basic per-IP rate limit is included to reduce misuse.
+
+## 📌 Notes
+
+- Recent generations and settings are stored locally in the browser.
+- SEO and clickbait scores are lightweight heuristics for visual feedback.
+- For production traffic, consider a more persistent rate-limiting strategy.
+
+## 📣 Use it
+
+Enter a topic, choose your preferences, and generate polished content in a single click. You can then copy individual sections or export everything at once.
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
